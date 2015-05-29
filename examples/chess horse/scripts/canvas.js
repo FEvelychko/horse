@@ -1,5 +1,5 @@
 /**
- * Created by Maksym on 5/28/2015.
+ * Created by Maksym on 5/29/2015.
  */
 
 
@@ -16,10 +16,10 @@ a_canvas.onclick = function(e) {
         context.fillRect(m[m.length-2]*50,m[m.length-1]*50,50,50);
 
         var N = 10;
-        var xs = m[0];
-        var ys = m[1];
-        var xf = m[2];
-        var yf = m[3];
+        var x = m[0];
+        var y = m[1];
+        var xParent = m[2];
+        var yParent = m[3];
 
         // creating of two-dimensional array
         var chess = new Array(N);
@@ -30,17 +30,17 @@ a_canvas.onclick = function(e) {
         var count = 0,
             steps;
         var pathsteps = [];
-        function potentialMoves(xs, ys) {
+        function potentialMoves(x, y) {
             var trash = [];
             var   moves = [
-                [xs+2, ys+1],
-                [xs+2, ys-1],
-                [xs+1, ys+2],
-                [xs+1, ys-2],
-                [xs-1, ys+2],
-                [xs-1, ys-2],
-                [xs-2, ys+1],
-                [xs-2, ys-1]
+                [x+2, y+1],
+                [x+2, y-1],
+                [x+1, y+2],
+                [x+1, y-2],
+                [x-1, y+2],
+                [x-1, y-2],
+                [x-2, y+1],
+                [x-2, y-1]
             ];
             for (var j=moves.length; j--;) {
                 if((moves[j][0]>=0) && (moves[j][0]<N) && (moves[j][1]>=0) && (moves[j][1]<N)) trash.push(moves[j]);
@@ -53,8 +53,8 @@ a_canvas.onclick = function(e) {
                 };
             };
         };
-        potentialMoves(xs, ys);
-        while (!chess[xf][yf]) {
+        potentialMoves(x, y);
+        while (!chess[xParent][yParent]) {
             count+=1;
             var j=pathsteps.length;
             for (var i=j; i--;) {
@@ -62,21 +62,21 @@ a_canvas.onclick = function(e) {
             };
             pathsteps.splice(0,j);
         };
-        steps = chess[xf][yf];
-        path.push([xs,ys]);
-        path[steps] = ([xf,yf]);
+        steps = chess[xParent][yParent];
+        path.push([x,y]);
+        path[steps] = ([xParent,yParent]);
         while (steps !=1) {
             steps-=1;
             var trash=[];
             var    moves = [
-                [xf+2, yf+1],
-                [xf+2, yf-1],
-                [xf+1, yf+2],
-                [xf+1, yf-2],
-                [xf-1, yf+2],
-                [xf-1, yf-2],
-                [xf-2, yf+1],
-                [xf-2, yf-1]
+                [xParent+2, yParent+1],
+                [xParent+2, yParent-1],
+                [xParent+1, yParent+2],
+                [xParent+1, yParent-2],
+                [xParent-1, yParent+2],
+                [xParent-1, yParent-2],
+                [xParent-2, yParent+1],
+                [xParent-2, yParent-1]
             ];
             for (var j=moves.length; j--;) {
                 if((moves[j][0]>=0) && (moves[j][0]<N) && (moves[j][1]>=0) && (moves[j][1]<N)) trash.push(moves[j]);
@@ -84,22 +84,22 @@ a_canvas.onclick = function(e) {
             for (j=trash.length; j--;) {
                 if(chess[trash[j][0]][trash[j][1]] === steps) {
                     path[steps]=[trash[j][0],trash[j][1]];
-                    xf = trash[j][0];
-                    yf = trash[j][1];};
+                    xParent = trash[j][0];
+                    yParent = trash[j][1]};
             };
         };
 
-        document.getElementById('way').innerHTML = "The quanity of steps: " + (path.length-1);
+        document.getElementById('way').innerHTML = "The quanity of steps:" + (path.length-1);
         context.strokeStyle = "#fff";
         for (i=path.length; i-=1;) {
-            xs=path[i][0];
-            ys=path[i][1];
-            xf=path[i-1][0];
-            yf=path[i-1][1];
-            context.moveTo(50*xs+5,50*ys+5);
-            context.lineTo(50*xf+5,50*ys+5);
-            context.moveTo(50*xf+5,50*ys+5);
-            context.lineTo(50*xf+5,50*yf+5);
+            x=path[i][0];
+            y=path[i][1];
+            xParent=path[i-1][0];
+            yParent=path[i-1][1];
+            context.moveTo(50*x+5,50*y+5);
+            context.lineTo(50*xParent+5,50*y+5);
+            context.moveTo(50*xParent+5,50*y+5);
+            context.lineTo(50*xParent+5,50*yParent+5);
             context.stroke();
         };
         context.stroke();

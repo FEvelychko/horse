@@ -23,27 +23,10 @@
     </div>
     <div class="col-md-4 col-md-offset-4">
         <br/><br/>
-        <input type = "submit" class = "btn btn-danger btn-md" value = "Calculate steps" onclick="runHorse()">
+        <input type = "submit" id = "runHorse" class = "btn btn-danger btn-md" value = "Calculate steps">
         <h3 id="countWays">The quanity of steps:</h3><br/><br/>
     </div>
 </div>
-
-<canvas width="500" height='500' id="canv"></canvas>
-<div class="col-md-4 col-md-offset-4">
-    <h3 id="way">The quanity of steps:</h3><br/><br/>
-</div>
-<script>
-    var a_canvas = document.getElementById("canv");
-    var context = a_canvas.getContext("2d");
-    for ( var i=0; i<500; i+=50) {
-        for (var j=0; j<500; j+=50) {
-            (((i+j)%20)==0) ? context.fillStyle = "#462506" : context.fillStyle = "#F2C661";
-            context.fillRect(i,j,50,50);
-        };
-    };
-    var m=[];
-</script>
-<script src="scripts/canvas.js"></script>
 <script src="scripts/main.js"></script>
 </body>
 </html>

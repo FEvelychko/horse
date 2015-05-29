@@ -9,8 +9,8 @@ var nextPoints = [];
 var chessField = [];
 var path = [];
 
-function runHorse(){
-//debugger;
+runHorse.onclick  = function runHorse(){
+
     /* the values start and end coordinates */
     var x1 = parseInt(document.getElementById("beginx").value);
     var y1 = parseInt(document.getElementById("beginy").value);
@@ -18,11 +18,11 @@ function runHorse(){
     var y2 = parseInt(document.getElementById("endy").value);
 
     /* structure of matrix as chess of Filed */
-    area = 3;
+    area = 1000;
     for(var i=0; i<=area; i++) {
         chessField[i] = [];
         for(var j=0; j<=area;j++){
-            chessField[i][j] = false;
+            chessField[i][j] = -1;
         }
     }
 
@@ -31,8 +31,8 @@ function runHorse(){
 
     /* it's checking, are values(x,y) belongs the area.length */
     active = function() {
-        if (x <= area && x > 0 && y <= area && y > 0) {
-            if(chessField[x][y] == false){
+        if (x < area && x > 0 && y < area && y > 0) {
+            if(chessField[x][y] == -1){
                 return true;
             }
         }
@@ -48,16 +48,14 @@ function runHorse(){
             if (nextPoints.x === x2 && nextPoints.y === y2 ){
                 return nextPoints;
             }
-            combinations = [[1,2],[2,1]];
-            //combinations = [[1,2],[1,-2],[-1,2],[-1,-2],[2,1],[2,-1],[-2,1],[-2,-1]];
-
+            combinations = [[1,2],[1,-2],[-1,2],[-1,-2],[2,1],[2,-1],[-2,1],[-2,-1]];
             for (var i = 0; i < combinations.length; i++) {
                 step = combinations[i];
                 x = nextPoints.x + step[0];
                 y = nextPoints.y + step[1];
                 if (active()) {
                     possiblePoints.push({"x":x,"y":y,"xParent":nextPoints.x, "yParent":nextPoints.y});
-                    chessField[x][y] = true;
+                    chessField[x][y] = 1;
                 }
             }
         }
@@ -87,7 +85,3 @@ function runHorse(){
     }());
     document.getElementById("countWays").innerHTML = "The quanity of steps: " + (path.length - 1);
 }
-
-/**
- * Created by Maksym on 5/26/2015.
- */
